@@ -1,3 +1,4 @@
+import random
 hercules_hp = 100
 hercules_ap = 25
 enemy_hp = 100
@@ -13,21 +14,31 @@ def prompt():
     selection = input("Please type your selection here:")
     return selection
 def attack(current_enemy_hp):
-            # print(f"The enemy is at {enemy_hp} health and you hit him for {hercules_ap} damage")
-            current_enemy_hp = current_enemy_hp - hercules_ap
+       # print(f"The enemy is at {enemy_hp} health and you hit him for {hercules_ap} damage")
+    current_enemy_hp = current_enemy_hp - hercules_ap
             # print(f" The enemy is now at {enemy_hp_afterhit} health")
-            return current_enemy_hp
+    return current_enemy_hp
+def attackback(your_current_hp):
+    your_current_hp = your_current_hp - enemy_ap
+    return your_current_hp
+    
 
 
 def RunGame():
     user_input = prompt()
     if user_input == "1" or "2" or "3" or "0":
         enemy_dead = False
+        print("You attack the Raid Boss!")
         current_enemy_hp = attack(enemy_hp)
+        print(f'they enemy attacks you back with {random.choice(attack_names)}')
+        your_current_hp = attackback(hercules_hp)
         while enemy_dead == False:
             print(f'Raid Boss Health:{current_enemy_hp}')
             if current_enemy_hp != 0:
              current_enemy_hp = attack(current_enemy_hp)
+             print(f'they enemy attacks you back with {random.choice(attack_names)}')
+             your_current_hp = attackback(your_current_hp)
+             print(f'Your Health:{your_current_hp}')
             else:
              print("you have killed the enemy")
              enemy_dead = True
