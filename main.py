@@ -7,7 +7,6 @@ def RunGame():
     enemy_hp = 40
     enemy_ap = 15
     attack_names = ['Sword Slash', 'Shield Bash', "Lunge", "Slide"]
-    continue_battle = False
 
     #Welcome Message to Player
     print("""You are Hercules, a hero that is being monitored by a highly powerful organization. You have no choice but to obey every living second.
@@ -17,14 +16,14 @@ def RunGame():
     #Linear Battle Path
     hercules_hp, hercules_ap, hercules_win = Battle(enemy_hp, enemy_ap, hercules_ap, hercules_hp, attack_names, enemy_name="Hades")
     if hercules_win:
-        print("Congratulations! You won the battle\n")
+        print('''Hades stands at your feet, Shouting your name. He knows you have brought defeat upon him, 
+        he slowly disintegrates as he screams. YOU HAVE VANISHED HADES BACK TO HELL!\n''')
         hercules_ap = Uprgade(hercules_ap)
         print(f"Your new attack power is {hercules_ap}\n")
-        continue_battle = True
     else:
         print("Game Over. Better luck next time!")
     
-    if continue_battle:
+    if hercules_win:
         hercules_hp, hercules_ap, hercules_win = Battle(enemy_hp, enemy_ap, hercules_ap, hercules_hp, attack_names, enemy_name="Hydra")
         if hercules_win:
             print('Congratulations, you have Defeated your Rivals! You are the Ultimate Champion!')
@@ -57,19 +56,19 @@ def attackback(hercules_hp, enemy_ap, enemy_name):
 
 #Upgrade Function
 def Uprgade(hercules_ap):
-    print('After defeating your enemy, you feel a charge of light fill your body, roll the dice to see your fate.\n' )
+    print('After defeating your enemy, you feel a charge of light fill your body, roll the dice to see your fate. 5 or better Upgrades Attack Power\n' )
     input('type Roll to Roll:')
     dice_roll = random.randint(0, 10) 
     print(f'You rolled a {dice_roll}')
-    if dice_roll <5: print("no updgrade see ya next time!\n")
-    if dice_roll >5: print("your attack has been increased!\n")
-    if dice_roll >5: hercules_ap = hercules_ap* (1 + random.uniform(0, 0.5))
+    if dice_roll <5:
+        print("no updgrade see ya next time!\n")
+    else:
+        print("your attack has been increased!\n")
+        hercules_ap = round(hercules_ap* (1 + random.uniform(0, 0.5)))
     return hercules_ap
 
 #Battle Function
 def Battle(enemy_hp, enemy_ap, hercules_ap, hercules_hp, attack_names, enemy_name):
-        hercules_win = False
-        enemy_win = False
         while enemy_hp > 0 and hercules_hp > 0:
             user_input = prompt(hercules_hp, hercules_ap, attack_names, enemy_name, enemy_hp, enemy_ap)
             
@@ -86,7 +85,7 @@ def Battle(enemy_hp, enemy_ap, hercules_ap, hercules_hp, attack_names, enemy_nam
                 
                 if hercules_hp <= 0:
                     print("You have been defeated!")
-                    return False
+                    return hercules_hp, hercules_ap, False
                 
                 print(f'Your Health: {hercules_hp}\n')
                 print(f'{enemy_name} Health: {enemy_hp}\n')
