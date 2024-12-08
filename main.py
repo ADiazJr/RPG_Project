@@ -1,12 +1,14 @@
 import random
 
 def RunGame():
+    # Initialize Character Stats
     hercules_hp = 40
     hercules_ap = 25
     enemy_hp = 40
     enemy_ap = 15
     winround1 = False
 
+    #Main Battle Loop
     while enemy_hp > 0 and hercules_hp > 0:
         user_input = prompt(hercules_hp, hercules_ap)
         
@@ -16,6 +18,7 @@ def RunGame():
             
             if enemy_hp <= 0:
                 print("You have killed the enemy!")
+                winround1 = True
                 break
             
             print(f'The enemy attacks you back with {random.choice(attack_names)}')
@@ -23,15 +26,14 @@ def RunGame():
             
             if hercules_hp <= 0:
                 print("You have been defeated!")
-                winround1 = True
                 break
             
             print(f'Your Health: {hercules_hp}')
             print(f'Raid Boss Health: {enemy_hp}')
         else:
             print("Invalid input. Please try again.")
-    if winround1 : True 
-    Uprgade(hercules_ap)
+    if winround1:
+        hercules_ap = Uprgade(hercules_ap)
 
 
 attack_names = ['Sword Slash', 'Shield Bash', "Lunge", "Slide"]
@@ -60,10 +62,11 @@ def attackback(hercules_hp, enemy_ap):
 
 def Uprgade(hercules_ap):
     print('After defeating your enemy, you feel a charge of light fill your body, roll the dice to see your fate.' )
-    input("type Roll to Roll:")
+    input('type Roll to Roll:')
     dice_roll = random.randint(0, 10) 
-    print(dice_roll)
+    print(f'You rolled a {dice_roll}')
     if dice_roll <5: print("no updgrade see ya next time!")
     if dice_roll >5: print("your attack has been increased!")
-    if dice_roll >5: hercules_ap *1.5
+    if dice_roll >5: hercules_ap = hercules_ap* (1 + random.uniform(0, 0.5))
+    return hercules_ap
 RunGame()
